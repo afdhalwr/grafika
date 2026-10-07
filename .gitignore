@@ -6,3 +6,7 @@ next-env.d.ts
 
 # Konfigurasi Firebase lokal — jangan diunggah
 .env*.local
+
+.vercel
+.env*
+!.env.example
