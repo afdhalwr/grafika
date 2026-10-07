@@ -1,0 +1,16 @@
+rules_version = '2';
+
+// Grafika: setiap pengguna hanya boleh membaca & menulis datanya sendiri.
+// Koleksi lain (mis. data Tugasku yang diakses lewat Admin SDK) tidak terpengaruh,
+// karena Admin SDK melewati aturan ini.
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /grafika_users/{uid} {
+      allow read, write: if request.auth != null && request.auth.uid == uid;
+
+      match /datasets/{datasetId} {
+        allow read, write: if request.auth != null && request.auth.uid == uid;
+      }
+    }
+  }
+}
