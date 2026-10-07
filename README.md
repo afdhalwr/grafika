@@ -2,6 +2,8 @@
 
 Aplikasi web statistik pribadi: catat angka harian (penjualan, pengunjung, jam belajar, dll.), lalu lihat hasilnya sebagai grafik interaktif, ringkasan KPI, dan wawasan otomatis.
 
+**🔗 Coba langsung: [grafika-iota.vercel.app](https://grafika-iota.vercel.app)** — klik "Coba akun demo" (demo@grafika.id / demo1234)
+
 **Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Chart.js · Firebase Authentication · Cloud Firestore
 
 ## Halaman
