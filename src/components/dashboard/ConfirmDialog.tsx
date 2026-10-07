@@ -24,7 +24,7 @@ export function useConfirm() {
     <Modal open={!!ask} onClose={() => done(false)} title={ask?.title || 'Yakin?'} small closeOnBackdrop={false} showClose={false}>
       <div className="modal-body"><p className="text-fg-2">{ask?.text}</p></div>
       <div className="modal-foot">
-        <button className="btn btn-ghost" type="button" onClick={() => done(false)} autoFocus>Batal</button>
+        <button className="btn btn-ghost" type="button" onClick={() => done(false)} data-autofocus>Batal</button>
         <button className="btn btn-danger" type="button" onClick={() => done(true)}>{ask?.ok || 'Ya, lanjutkan'}</button>
       </div>
     </Modal>

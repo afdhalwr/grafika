@@ -19,11 +19,11 @@ const wait = (ms: number) => new Promise(r => setTimeout(r, ms));
 
 type Tab = 'login' | 'register';
 const TAB_COPY: Record<Tab, { title: string; sub: string; doc: string }> = {
-  login: { title: 'Selamat datang kembali 👋', sub: 'Masuk untuk melihat statistik terbarumu.', doc: 'Masuk — Grafika' },
-  register: { title: 'Buat akun baru ✨', sub: 'Gratis, dan sudah berisi contoh data untuk dijelajahi.', doc: 'Daftar — Grafika' },
+  login: { title: 'Selamat datang kembali', sub: 'Masuk untuk melihat statistik terbarumu.', doc: 'Masuk — Grafika' },
+  register: { title: 'Buat akun baru', sub: 'Gratis, dan sudah berisi contoh data untuk dijelajahi.', doc: 'Daftar — Grafika' },
 };
 
-const STRENGTH = ['Kekuatan kata sandi', 'Lemah', 'Cukup', 'Baik', 'Kuat 💪'];
+const STRENGTH = ['Kekuatan kata sandi', 'Lemah', 'Cukup', 'Baik', 'Kuat'];
 
 type Fields = { loginEmail: string; loginPassword: string; regName: string; regEmail: string; regPassword: string; regConfirm: string };
 type FieldId = keyof Fields;

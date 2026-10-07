@@ -166,7 +166,17 @@
   a { color: var(--primary); }
   button { cursor: pointer; }
   button:disabled { cursor: not-allowed; }
-  :focus-visible { outline: none; box-shadow: var(--ring); border-radius: 8px; }
+  /* cincin fokus memakai outline supaya bentuk elemen tidak berubah */
+  :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+  input:focus-visible, select:focus-visible, textarea:focus-visible { outline: none; }
+  /* sembunyikan panah bawaan <datalist>; saran tetap muncul saat mengetik */
+  input[list]::-webkit-calendar-picker-indicator { display: none !important; }
+  input[type='date']::-webkit-calendar-picker-indicator { cursor: pointer; opacity: 0.6; }
+  input[type='date']::-webkit-calendar-picker-indicator:hover { opacity: 1; }
+  [data-theme='dark'] input[type='date']::-webkit-calendar-picker-indicator { filter: invert(1); }
+  input[type='number'] { -moz-appearance: textfield; }
+  input[type='number']::-webkit-inner-spin-button, input[type='number']::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
+  input[type='search']::-webkit-search-cancel-button { -webkit-appearance: none; }
   ::selection { background: var(--primary-soft); color: var(--text); }
   kbd {
     display: inline-grid; place-items: center; min-width: 22px; height: 22px; padding: 0 6px;
@@ -456,7 +466,7 @@
   .th-sort::after { content: '↕'; opacity: 0.35; font-size: 11px; }
   .th-sort[data-dir='asc']::after { content: '↑'; opacity: 1; color: var(--primary); }
   .th-sort[data-dir='desc']::after { content: '↓'; opacity: 1; color: var(--primary); }
-  .num .th-sort { flex-direction: row-reverse; }
+  .num .th-sort { justify-content: flex-end; }
 
   .anim-in { animation: form-in 0.4s var(--ease) backwards; }
   .shake { animation: shake 0.45s; }

@@ -45,7 +45,7 @@ export function DatasetModal({
         <div className="modal-body">
           <div className="mb-3.5">
             <label className="label" htmlFor="dsNameInput">Nama dataset</label>
-            <input className="input" id="dsNameInput" maxLength={32} placeholder="mis. Pengeluaran Bulanan" value={name} onChange={e => setName(e.target.value)} autoFocus required />
+            <input className="input" id="dsNameInput" maxLength={32} placeholder="mis. Pengeluaran Bulanan" value={name} onChange={e => setName(e.target.value)} required />
           </div>
           <div className="grid grid-cols-2 gap-3.5 max-sm:grid-cols-1">
             <div className="mb-3.5">
@@ -65,17 +65,23 @@ export function DatasetModal({
                 <label key={i} className="relative cursor-pointer" title={`Warna ${i + 1}`}>
                   <input type="radio" name="dsColor" className="peer absolute opacity-0" checked={color === i} onChange={() => setColor(i)} />
                   <span
-                    className="block size-8 rounded-[10px] transition peer-checked:scale-105 peer-checked:shadow-[0_0_0_2px_var(--surface),0_0_0_4px_var(--c)] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-primary"
+                    className="grid size-8 place-items-center rounded-[10px] text-white transition peer-checked:shadow-[0_0_0_2px_var(--surface),0_0_0_4px_var(--c)] peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-primary"
                     style={{ background: `var(--series-${i + 1})`, ['--c' as string]: `var(--series-${i + 1})` }}
-                  />
+                  >
+                    {color === i && <Icon name="check" size={16} />}
+                  </span>
                   <span className="sr-only">Warna {i + 1}</span>
                 </label>
               ))}
             </div>
           </fieldset>
-          <label className="flex cursor-pointer items-start gap-2.5 text-sm text-fg-2">
-            <input type="checkbox" className="mt-0.5 size-[18px] flex-none accent-primary" checked={hib} onChange={e => setHib(e.target.checked)} />
-            <span>Angka naik berarti kabar baik <span className="optional">(matikan untuk data seperti pengeluaran)</span></span>
+          <label className="check items-start!">
+            <input type="checkbox" checked={hib} onChange={e => setHib(e.target.checked)} />
+            <span className="check-box mt-px"><Icon name="check" /></span>
+            <span>
+              Angka naik berarti kabar baik
+              <span className="mt-0.5 block text-[12.5px] text-muted">Matikan untuk data seperti pengeluaran, supaya kenaikan ditandai merah.</span>
+            </span>
           </label>
           <p className="field-error" role="alert">{error}</p>
         </div>

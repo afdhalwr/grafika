@@ -41,9 +41,12 @@ export default function LandingPage() {
 
       <main id="main">
         {/* ================= HERO ================= */}
-        <section className="relative overflow-hidden pt-12 pb-8 short:py-5">
-          <div aria-hidden className="pointer-events-none absolute -top-[140px] -right-20 size-[460px] rounded-full bg-[#c9c7ff] opacity-55 blur-[70px] dark:opacity-20" />
-          <div aria-hidden className="pointer-events-none absolute -bottom-[60px] -left-[140px] size-[380px] rounded-full bg-[#ffd9e6] opacity-55 blur-[70px] dark:opacity-20" />
+        <section className="relative pt-12 pb-8 short:py-5">
+          {/* latar lembut yang memudar ke bawah — tanpa tepi terpotong */}
+          <div aria-hidden className="pointer-events-none absolute inset-x-0 -top-[72px] bottom-[-120px] overflow-hidden [mask-image:linear-gradient(to_bottom,#000_50%,transparent)]">
+            <div className="absolute -top-[120px] right-[-6%] size-[520px] rounded-full bg-[#c9c7ff] opacity-50 blur-[90px] dark:opacity-[.18]" />
+            <div className="absolute top-[38%] -left-[180px] size-[420px] rounded-full bg-[#ffd9e6] opacity-50 blur-[90px] dark:opacity-[.14]" />
+          </div>
 
           <div className="wrap relative grid grid-cols-[1.05fr_1fr] items-center gap-14 max-lg:grid-cols-1 max-lg:gap-8 short:gap-10">
             <div className="reveal max-lg:text-center">
@@ -60,29 +63,28 @@ export default function LandingPage() {
                 <Link className="btn btn-primary btn-lg" href="/login#daftar">Mulai gratis <Icon name="arrow-right" /></Link>
                 <Link className="btn btn-outline btn-lg" href="/login?demo=1"><Icon name="zap" /> Coba akun demo</Link>
               </div>
-              <ul className="flex flex-wrap gap-8 max-lg:justify-center" aria-label="Sekilas tentang Grafika">
+              <ul className="flex flex-wrap gap-8 max-lg:justify-center max-sm:grid max-sm:grid-cols-3 max-sm:gap-3" aria-label="Sekilas tentang Grafika">
                 {[
                   { count: 3, label: 'jenis grafik interaktif' },
                   { count: 100, suffix: '%', label: 'tersinkron antar-perangkat' },
                   { count: 60, prefix: '<', suffix: ' dtk', label: 'dari daftar ke grafik pertama' },
                 ].map(s => (
                   <li key={s.label} className="flex flex-col">
-                    <strong className="text-[26px] font-extrabold tracking-[-0.02em] short:text-[22px]" data-count={s.count} data-prefix={s.prefix} data-suffix={s.suffix}>
+                    <strong className="text-[26px] font-extrabold tracking-[-0.02em] max-sm:text-[22px] short:text-[22px]" data-count={s.count} data-prefix={s.prefix} data-suffix={s.suffix}>
                       {(s.prefix || '') + s.count + (s.suffix || '')}
                     </strong>
-                    <span className="text-[13px] text-muted">{s.label}</span>
+                    <span className="text-[13px] leading-snug text-muted max-sm:text-xs">{s.label}</span>
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div className="reveal relative px-5 pt-9 pb-11 max-sm:px-0 short:px-4 short:pt-[30px] short:pb-9" role="img" aria-label="Contoh tampilan dasbor Grafika">
+            <div className="reveal relative px-5 pt-[46px] pb-11 max-sm:px-0 short:px-4 short:pt-[42px] short:pb-9" role="img" aria-label="Contoh tampilan dasbor Grafika">
               <div className="card rounded-[26px]! px-[22px] pt-[22px] pb-10 shadow-deep! short:px-[18px] short:pt-[18px]">
                 <HeroChart />
               </div>
-              <FloatCard className="-top-[26px] -left-[18px] max-sm:-left-1" icon="target" tone="mint" label="Target bulan ini" value="86% tercapai" />
-              <FloatCard className="top-[42%] -right-2 [animation-delay:-2s] max-sm:-right-1" icon="flame" tone="peach" label="Hari paling ramai" value="Sabtu" />
-              <FloatCard className="bottom-0 left-[12%] [animation-delay:-4s] max-sm:hidden" icon="sparkles" tone="primary" label="Wawasan" value="Kopi = 36% omzet" />
+              <FloatCard className="top-0 -left-2 max-sm:left-0" icon="target" tone="mint" label="Target bulan ini" value="86% tercapai" />
+              <FloatCard className="right-0 bottom-0 [animation-delay:-3s] max-sm:right-0" icon="sparkles" tone="primary" label="Wawasan" value="Kopi = 36% omzet" />
             </div>
           </div>
 

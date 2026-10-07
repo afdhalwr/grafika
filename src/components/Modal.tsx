@@ -27,7 +27,12 @@ export function Modal({
   useEffect(() => {
     const dlg = ref.current;
     if (!dlg) return;
-    if (open && !dlg.open) dlg.showModal();
+    if (open && !dlg.open) {
+      dlg.showModal();
+      // fokus ke isian pertama (atau [data-autofocus]), bukan tombol tutup
+      const target = dlg.querySelector<HTMLElement>('[data-autofocus], .modal-body input:not([type=hidden]):not([type=radio]):not([type=checkbox]), .modal-body select, .modal-body textarea, .modal-foot button');
+      target?.focus();
+    }
     if (!open && dlg.open) dlg.close();
   }, [open]);
 

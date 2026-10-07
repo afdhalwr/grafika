@@ -104,7 +104,7 @@ export function ChartCard({ title, sub, tools, className = '', children }: {
           <h3 className="flex items-center gap-2 text-base font-bold">{title}</h3>
           {sub && <p className="mt-0.5 text-[12.5px] text-muted">{sub}</p>}
         </div>
-        {tools && <div className="no-print flex flex-wrap items-center gap-2 max-xs:w-full">{tools}</div>}
+        {tools && <div className="no-print flex flex-wrap items-center gap-2">{tools}</div>}
       </header>
       {children}
     </article>
@@ -152,7 +152,7 @@ export function TrendChart({ c, theme, chartRef }: { c: Computed; theme: Theme; 
       datasets.push({
         label: 'Periode sebelumnya',
         data: cur.map((_, i) => prv[i]?.value ?? null),
-        borderColor: muted, borderDash: [5, 4], borderWidth: 2,
+        borderColor: withAlpha(muted, 0.55), borderDash: [4, 4], borderWidth: 1.5,
         fill: false, tension: 0.35, pointRadius: 0, pointHoverRadius: 4,
         pointBackgroundColor: muted, pointBorderColor: cssVar('--surface'), pointBorderWidth: 2,
       });
@@ -320,7 +320,7 @@ export function WeekdayChart({ c, theme, chartRef }: { c: Computed; theme: Theme
           data: values,
           backgroundColor: values.map((_, i) => (i === maxIdx ? color : withAlpha(color, 0.45))),
           hoverBackgroundColor: color,
-          borderRadius: { topLeft: 4, topRight: 4 },
+          borderRadius: { topLeft: 6, topRight: 6 },
           borderSkipped: 'bottom',
           maxBarThickness: 36,
         }],

@@ -28,7 +28,7 @@ export function Sidebar({
   const ref = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (open) ref.current?.querySelector<HTMLElement>('button, a')?.focus();
+    if (open) ref.current?.querySelector<HTMLElement>('[data-close]')?.focus();
   }, [open]);
 
   const sbTitle = 'flex items-center justify-between px-2 pb-2 text-[11.5px] font-bold tracking-[0.08em] text-muted uppercase short:pb-1';
@@ -45,7 +45,7 @@ export function Sidebar({
       >
         <div className="flex items-center justify-between px-1.5">
           <Brand />
-          <button className="icon-btn plain lg:hidden" type="button" onClick={onClose} aria-label="Tutup menu"><Icon name="x" /></button>
+          <button className="icon-btn plain lg:hidden" type="button" onClick={onClose} aria-label="Tutup menu" data-close><Icon name="x" /></button>
         </div>
 
         <div>
@@ -64,8 +64,9 @@ export function Sidebar({
                 >
                   <span className="size-2.5 flex-none rounded" style={{ background: seriesColor(ds.color) }} />
                   <span className="min-w-0 flex-1 truncate">{ds.name}</span>
-                  {i < 9 && <span className="text-[11px] text-muted opacity-0 transition-opacity group-hover:opacity-100" aria-hidden>{i + 1}</span>}
-                  <span className="text-xs font-semibold text-muted">{Fmt.compact(ds.entries.length)}</span>
+                  <span className="rounded-md bg-surface-2 px-1.5 py-px text-[11px] font-semibold text-muted tabular-nums" title={`${Fmt.number(ds.entries.length)} catatan`}>
+                    {Fmt.compact(ds.entries.length)}
+                  </span>
                 </button>
               </li>
             )) : <li className="px-2.5 py-1.5 text-[13.5px] text-muted">Belum ada dataset.</li>}

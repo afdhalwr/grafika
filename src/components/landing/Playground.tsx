@@ -6,7 +6,7 @@ import { ChartCanvas } from '@/components/ChartCanvas';
 import { Icon } from '@/components/Icon';
 import { useTheme } from '@/components/theme';
 import { useToast } from '@/components/Toast';
-import { cssVar } from '@/lib/format';
+import { cssVar, withAlpha } from '@/lib/format';
 
 const DEFAULT: [string, number][] = [['Senin', 4], ['Selasa', 7], ['Rabu', 5], ['Kamis', 9]];
 
@@ -27,9 +27,9 @@ export function Playground() {
       datasets: [{
         label: 'Tugas selesai',
         data: points.map(p => p[1]),
-        backgroundColor: cssVar('--series-1'),
+        backgroundColor: withAlpha(cssVar('--primary') || '#5b5bf7', 0.85),
         hoverBackgroundColor: cssVar('--primary'),
-        borderRadius: { topLeft: 4, topRight: 4 },
+        borderRadius: { topLeft: 6, topRight: 6 },
         borderSkipped: 'bottom',
         maxBarThickness: 44,
       }],
@@ -82,10 +82,12 @@ export function Playground() {
           </div>
           <button className="btn btn-primary max-sm:col-span-2" type="submit"><Icon name="plus" /> Tambah</button>
         </form>
-        <p className="field-error" role="alert">{error?.msg}</p>
-        <button className="btn btn-ghost btn-sm mt-2 -ml-3" type="button" onClick={() => { setPoints(DEFAULT); setError(null); }}>
-          Atur ulang contoh
-        </button>
+        <div className="mt-3 flex min-h-5 items-center justify-between gap-3">
+          <p className="field-error mt-0!" role="alert">{error?.msg}</p>
+          <button className="ml-auto text-[13px] font-semibold text-muted hover:text-primary" type="button" onClick={() => { setPoints(DEFAULT); setError(null); }}>
+            Atur ulang contoh
+          </button>
+        </div>
       </div>
       <div className="card p-6 shadow-float!">
         <p className="mb-3 font-bold">Tugas selesai per hari</p>

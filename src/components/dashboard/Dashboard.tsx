@@ -12,7 +12,7 @@ import { useToast } from '@/components/Toast';
 import { compute, periodBounds, rangeText } from '@/lib/analytics';
 import { logout } from '@/lib/auth';
 import { downloadFile, entriesToCSV, parseCSV, readTextFile, rowsToEntries } from '@/lib/csv';
-import { firstName, Fmt, greeting, slug, startOfToday, toISO, uid } from '@/lib/format';
+import { Fmt, greeting, slug, startOfToday, toISO, uid } from '@/lib/format';
 import { SERIES_COUNT, withColorSlot } from '@/lib/seed';
 import type { Dataset, Entry, Granularity, Prefs, RangeKey } from '@/lib/types';
 import { CategoryChart, ChartCard, DownloadButton, fmtVal, seriesColor, TrendChart, trendSubtitle, WeekdayChart, weekdayStats, catColor } from './Charts';
@@ -396,7 +396,7 @@ export function Dashboard({ user }: { user: User }) {
               <Icon name="menu" />
             </button>
             <div className="min-w-0 flex-1">
-              <h1 className="truncate text-xl font-extrabold max-xs:text-[17px] short:text-lg">{greeting()}, {firstName(name)} 👋</h1>
+              <h1 className="truncate text-xl font-extrabold max-xs:text-[17px] short:text-lg">{greeting()}, {name}</h1>
               <p className="text-[13px] text-muted short:text-[12.5px]">{Fmt.date(toISO(new Date()), { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
             </div>
             <label className="flex h-[42px] w-[min(320px,32vw)] items-center gap-2 rounded-xl border-[1.5px] border-line bg-surface pr-2 pl-3.5 text-muted transition focus-within:border-primary focus-within:shadow-[var(--ring)] max-lg:order-5 max-lg:w-full short:h-[38px]">
@@ -415,15 +415,13 @@ export function Dashboard({ user }: { user: User }) {
           <main id="content" tabIndex={-1} className="flex flex-col gap-5 px-7 pt-2 pb-8 outline-none max-lg:px-4 max-lg:pb-24 short:gap-3.5 short:px-6 short:pt-1 short:pb-6 print:p-0">
             {/* ---------- sambutan ---------- */}
             {!profile.welcomeDismissed && (
-              <div className="card no-print flex items-start gap-3.5 border-transparent! bg-[linear-gradient(120deg,var(--primary-soft),var(--pink-soft))]! px-[18px] py-4 max-md:flex-wrap short:items-center short:px-3.5 short:py-2.5">
-                <span className="grid size-10 flex-none place-items-center rounded-xl bg-surface text-primary short:size-[34px]"><Icon name="sparkles" /></span>
+              <div className="card no-print relative flex items-center gap-3.5 overflow-hidden py-3.5 pr-3.5 pl-5 before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-primary max-md:flex-wrap short:py-2.5">
+                <span className="tone tone-primary size-9 rounded-[10px]"><Icon name="sparkles" /></span>
                 <div className="min-w-0 flex-1">
-                  <strong>Selamat datang di Grafika!</strong>
-                  <p className="mt-0.5 text-sm text-fg-2 short:text-[13px]">
-                    Dasbor ini sudah berisi contoh data supaya kamu bisa langsung menjelajah. Klik irisan grafik untuk menyaring kategori, atau tekan <kbd>N</kbd> untuk menambah data.
-                  </p>
+                  <strong className="text-[14.5px]">Selamat datang di Grafika</strong>
+                  <p className="text-[13.5px] text-fg-2">Dasbor ini berisi data contoh. Klik irisan grafik untuk menyaring kategori, atau tekan <kbd>N</kbd> untuk menambah data.</p>
                 </div>
-                <div className="ml-auto flex items-center gap-1.5 max-md:w-full max-md:justify-end">
+                <div className="flex items-center gap-1.5 max-md:w-full max-md:justify-end">
                   <button className="btn btn-sm btn-outline" type="button" onClick={clearSamples}>Mulai dari kosong</button>
                   <button className="icon-btn plain sm" type="button" aria-label="Tutup sambutan" onClick={() => updateProfile({ welcomeDismissed: true })}><Icon name="x" /></button>
                 </div>
