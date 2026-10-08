@@ -12,9 +12,11 @@ import {
   updateProfile,
 } from 'firebase/auth';
 import { firebaseAuth } from './firebase';
-import { ensureUserData } from './store';
+import { ensureUserData, resetToSample } from './store';
 
 export const DEMO = { name: 'Pengguna Demo', email: 'demo@grafika.id', password: 'demo1234' };
+
+export const isDemoEmail = (email?: string | null) => (email || '').toLowerCase() === DEMO.email;
 
 /* ---------- pembatasan percobaan (UX di sisi klien; Firebase juga membatasi di server) ---------- */
 
@@ -105,12 +107,20 @@ export async function login({ email, password, remember }: { email: string; pass
   }
 }
 
-/** Masuk ke akun demo; dibuat otomatis saat pertama kali dipakai. */
+/**
+ * Masuk ke akun demo; dibuat otomatis saat pertama kali dipakai.
+ * Akun demo dipakai bersama, jadi datanya dikembalikan ke contoh awal setiap kali ada yang masuk.
+ */
 export async function loginDemo() {
   const auth = firebaseAuth();
   await setPersistence(auth, browserSessionPersistence);
   try {
     const cred = await signInWithEmailAndPassword(auth, DEMO.email, DEMO.password);
+    try {
+      await resetToSample(cred.user.uid, DEMO.name, DEMO.email);
+    } catch {
+      // Reset gagal (mis. offline) — tetap masuk dengan data yang ada.
+    }
     return { uid: cred.user.uid, name: DEMO.name };
   } catch (err) {
     const code = err instanceof FirebaseError ? err.code : '';

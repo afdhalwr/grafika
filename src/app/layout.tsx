@@ -12,10 +12,22 @@ const jakarta = Plus_Jakarta_Sans({
   display: 'swap',
 });
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'https://grafika-iota.vercel.app';
+const DESCRIPTION = 'Grafika mengubah catatan angka harianmu menjadi grafik interaktif dan wawasan otomatis. Gratis, cepat, dan tersimpan aman di cloud.';
+
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_URL),
   title: { default: 'Grafika — Statistik yang Enak Dilihat', template: '%s — Grafika' },
-  description:
-    'Grafika mengubah catatan angka harianmu menjadi grafik interaktif dan wawasan otomatis. Gratis, cepat, dan tersimpan aman di cloud.',
+  description: DESCRIPTION,
+  openGraph: {
+    type: 'website',
+    locale: 'id_ID',
+    url: '/',
+    siteName: 'Grafika',
+    title: 'Grafika — Statistik yang Enak Dilihat',
+    description: DESCRIPTION,
+  },
+  twitter: { card: 'summary_large_image', title: 'Grafika — Statistik yang Enak Dilihat', description: DESCRIPTION },
   icons: {
     icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%235b5bf7'/%3E%3Cpath d='M9 23v-7M16 23V9M23 23v-9' stroke='white' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E",
   },

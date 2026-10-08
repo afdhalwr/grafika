@@ -1,10 +1,42 @@
-# Grafika — Statistik yang Enak Dilihat
+<div align="center">
 
-Aplikasi web statistik pribadi: catat angka harian (penjualan, pengunjung, jam belajar, dll.), lalu lihat hasilnya sebagai grafik interaktif, ringkasan KPI, dan wawasan otomatis.
+# Grafika
 
-**🔗 Coba langsung: [grafika-iota.vercel.app](https://grafika-iota.vercel.app)** — klik "Coba akun demo" (demo@grafika.id / demo1234)
+**Ubah deretan angka jadi cerita yang mudah dipahami.**
 
-**Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Chart.js · Firebase Authentication · Cloud Firestore
+Catat angka harian — penjualan, pengunjung, jam belajar — lalu lihat hasilnya sebagai grafik interaktif, ringkasan KPI, dan wawasan otomatis.
+
+[**🔗 Buka aplikasi**](https://grafika-iota.vercel.app) · [**⚡ Coba akun demo**](https://grafika-iota.vercel.app/login?demo=1)
+
+![Next.js](https://img.shields.io/badge/Next.js_15-000?logo=nextdotjs&logoColor=fff)
+![React](https://img.shields.io/badge/React_19-149eca?logo=react&logoColor=fff)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178c6?logo=typescript&logoColor=fff)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_v4-06b6d4?logo=tailwindcss&logoColor=fff)
+![Chart.js](https://img.shields.io/badge/Chart.js-ff6384?logo=chartdotjs&logoColor=fff)
+![Firebase](https://img.shields.io/badge/Firebase-dd2c00?logo=firebase&logoColor=fff)
+![Vercel](https://img.shields.io/badge/Deploy-Vercel-000?logo=vercel&logoColor=fff)
+
+<img src="docs/screenshots/demo.gif" alt="Demo Grafika: masuk dengan akun demo, menyaring kategori, mengganti tampilan mingguan, dan tema gelap" width="820">
+
+</div>
+
+## Tampilan
+
+| Dasbor | Mode gelap |
+|---|---|
+| ![Dasbor Grafika](docs/screenshots/dashboard.png) | ![Dasbor Grafika dalam mode gelap](docs/screenshots/dashboard-dark.png) |
+| **Landing page** | **Halaman masuk** |
+| ![Landing page Grafika](docs/screenshots/landing.png) | ![Halaman masuk Grafika](docs/screenshots/login.png) |
+
+<p align="center">
+  <img src="docs/screenshots/landing-mobile.png" alt="Landing page di ponsel" width="260">
+  &nbsp;&nbsp;
+  <img src="docs/screenshots/dashboard-mobile.png" alt="Dasbor di ponsel" width="260">
+</p>
+
+> **Akun demo:** `demo@grafika.id` / `demo1234` — dipakai bersama, datanya kembali ke contoh awal setiap kali ada yang masuk, jadi bebas dicoba.
+
+**Stack:** Next.js 15 (App Router) · React 19 · TypeScript · Tailwind CSS v4 · Chart.js · Firebase Authentication · Cloud Firestore · Vercel
 
 ## Halaman
 
@@ -21,7 +53,7 @@ Aplikasi web statistik pribadi: catat angka harian (penjualan, pengunjung, jam b
 - Lupa kata sandi mengirim email reset sungguhan
 - Label mengambang, tombol tampilkan sandi, peringatan Caps Lock, pengukur kekuatan sandi
 - Batas 5 percobaan gagal lalu jeda 30 detik (di atas pembatasan bawaan Firebase)
-- Akun demo dibuat otomatis saat pertama kali dipakai, form terisi seperti diketik
+- Akun demo dibuat otomatis saat pertama kali dipakai, form terisi seperti diketik, dan datanya di-reset ke contoh awal setiap kali ada yang masuk
 
 **Dasbor (Cloud Firestore)**
 - Banyak dataset, masing-masing dengan satuan, warna, target bulanan, dan arah "naik = baik"
@@ -39,6 +71,9 @@ Aplikasi web statistik pribadi: catat angka harian (penjualan, pengunjung, jam b
 - **Sinkron real-time** antar-tab dan antar-perangkat, tetap bisa dipakai saat offline (cache IndexedDB)
 - Mode gelap, tampilan ponsel (sidebar geser + tombol tambah mengambang)
 - Pintasan keyboard: `N` tambah, `/` cari, `T` tema, `1–9` ganti dataset, `?` bantuan, `Esc` hapus filter
+
+**Lainnya**
+- Gambar pratinjau tautan (Open Graph) dibuat otomatis saat build dengan `next/og`, jadi tautan tampil sebagai kartu bergambar di WhatsApp, LinkedIn, dan X
 
 ## Menjalankan
 

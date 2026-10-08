@@ -10,7 +10,7 @@ import { Modal } from '@/components/Modal';
 import { ThemeToggle, toggleTheme, useTheme } from '@/components/theme';
 import { useToast } from '@/components/Toast';
 import { compute, periodBounds, rangeText } from '@/lib/analytics';
-import { logout } from '@/lib/auth';
+import { isDemoEmail, logout } from '@/lib/auth';
 import { downloadFile, entriesToCSV, parseCSV, readTextFile, rowsToEntries } from '@/lib/csv';
 import { Fmt, greeting, slug, startOfToday, toISO, uid } from '@/lib/format';
 import { SERIES_COUNT, withColorSlot } from '@/lib/seed';
@@ -370,6 +370,7 @@ export function Dashboard({ user }: { user: User }) {
   if (loading || !profile) return <FullPageSpinner label="Menyiapkan datamu…" />;
 
   const name = profile.name || user.displayName || 'Pengguna';
+  const isDemo = isDemoEmail(user.email);
   const wd = c ? weekdayStats(c) : null;
 
   return (
@@ -397,7 +398,14 @@ export function Dashboard({ user }: { user: User }) {
             </button>
             <div className="min-w-0 flex-1">
               <h1 className="truncate text-xl font-extrabold max-xs:text-[17px] short:text-lg">{greeting()}, {name}</h1>
-              <p className="text-[13px] text-muted short:text-[12.5px]">{Fmt.date(toISO(new Date()), { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</p>
+              <p className="flex items-center gap-2 text-[13px] text-muted short:text-[12.5px]">
+                <span className="truncate">{Fmt.date(toISO(new Date()), { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                {isDemo && (
+                  <span className="flex-none rounded-full bg-lemon-soft px-2 py-px text-[11px] font-bold text-lemon" title="Data akun demo kembali ke contoh awal setiap kali ada yang masuk dengan akun demo">
+                    Mode demo
+                  </span>
+                )}
+              </p>
             </div>
             <label className="flex h-[42px] w-[min(320px,32vw)] items-center gap-2 rounded-xl border-[1.5px] border-line bg-surface pr-2 pl-3.5 text-muted transition focus-within:border-primary focus-within:shadow-[var(--ring)] max-lg:order-5 max-lg:w-full short:h-[38px]">
               <Icon name="search" />
@@ -418,8 +426,13 @@ export function Dashboard({ user }: { user: User }) {
               <div className="card no-print relative flex items-center gap-3.5 overflow-hidden py-3.5 pr-3.5 pl-5 before:absolute before:inset-y-0 before:left-0 before:w-1 before:bg-primary max-md:flex-wrap short:py-2.5">
                 <span className="tone tone-primary size-9 rounded-[10px]"><Icon name="sparkles" /></span>
                 <div className="min-w-0 flex-1">
-                  <strong className="text-[14.5px]">Selamat datang di Grafika</strong>
-                  <p className="text-[13.5px] text-fg-2">Dasbor ini berisi data contoh. Klik irisan grafik untuk menyaring kategori, atau tekan <kbd>N</kbd> untuk menambah data.</p>
+                  <strong className="text-[14.5px]">{isDemo ? 'Kamu sedang memakai akun demo' : 'Selamat datang di Grafika'}</strong>
+                  <p className="text-[13.5px] text-fg-2">
+                    {isDemo
+                      ? 'Silakan coba apa saja — data kembali ke contoh awal setiap kali ada yang masuk dengan akun demo. '
+                      : 'Dasbor ini berisi data contoh. '}
+                    Klik irisan grafik untuk menyaring kategori, atau tekan <kbd>N</kbd> untuk menambah data.
+                  </p>
                 </div>
                 <div className="flex items-center gap-1.5 max-md:w-full max-md:justify-end">
                   <button className="btn btn-sm btn-outline" type="button" onClick={clearSamples}>Mulai dari kosong</button>

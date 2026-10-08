@@ -12,6 +12,7 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  getDocs,
   onSnapshot,
   orderBy,
   query,
@@ -37,6 +38,18 @@ export async function ensureUserData(uid: string, name: string, email: string) {
   const profile: Profile = { name, email, createdAt: new Date().toISOString(), activeId: datasets[0].id, welcomeDismissed: false };
   batch.set(userRef(uid), profile);
   datasets.forEach(ds => batch.set(datasetRef(uid, ds.id), withoutId(ds)));
+  await batch.commit();
+}
+
+/** Ganti seluruh data pengguna dengan data contoh baru (dipakai untuk akun demo bersama). */
+export async function resetToSample(uid: string, name: string, email: string) {
+  const existing = await getDocs(datasetsCol(uid));
+  const datasets = seedDatasets();
+  const batch = writeBatch(getDb());
+  existing.forEach(d => batch.delete(d.ref));
+  datasets.forEach(ds => batch.set(datasetRef(uid, ds.id), withoutId(ds)));
+  const profile: Profile = { name, email, createdAt: new Date().toISOString(), activeId: datasets[0].id, welcomeDismissed: false };
+  batch.set(userRef(uid), profile);
   await batch.commit();
 }
 

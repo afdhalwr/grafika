@@ -25,7 +25,7 @@ const FAQ: [string, React.ReactNode][] = [
   ['Apakah Grafika gratis?', 'Ya. Semua fitur bisa dipakai tanpa biaya dan tanpa kartu kredit.'],
   ['Di mana dataku disimpan?', 'Di Google Cloud Firestore, terhubung ke akunmu. Hanya kamu yang bisa membaca dan mengubahnya, dan datamu ikut tersinkron saat kamu masuk dari perangkat lain.'],
   ['Bisakah aku mengimpor data dari Excel atau Google Sheets?', <>Bisa. Simpan lembarmu sebagai CSV dengan kolom <code className="rounded-md bg-surface-2 px-1.5 py-0.5 text-[13px]">tanggal, kategori, nilai, catatan</code>, lalu impor dari dasbor.</>],
-  ['Apa bedanya akun demo dan akun sendiri?', 'Akun demo dipakai bersama oleh semua pengunjung, jadi isinya bisa berubah. Akun sendiri juga dimulai dengan contoh data, yang bisa kamu hapus kapan saja.'],
+  ['Apa bedanya akun demo dan akun sendiri?', 'Akun demo dipakai bersama oleh semua pengunjung, dan datanya kembali ke contoh awal setiap kali ada yang masuk — jadi bebas dicoba. Akun sendiri juga dimulai dengan contoh data, tapi tersimpan permanen dan hanya bisa diakses olehmu.'],
 ];
 
 const kicker = 'mb-3 inline-block text-[13px] font-bold tracking-[0.1em] text-primary uppercase';
