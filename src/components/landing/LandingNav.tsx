@@ -12,6 +12,7 @@ const LINKS = [
   ['#fitur', 'Fitur'],
   ['#cara-kerja', 'Cara kerja'],
   ['#coba', 'Coba langsung'],
+  ['#keamanan', 'Keamanan'],
   ['#faq', 'FAQ'],
 ] as const;
 

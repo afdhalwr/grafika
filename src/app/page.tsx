@@ -21,9 +21,18 @@ const STEPS = [
   ['Baca ceritanya', 'Grafik, KPI, dan wawasan diperbarui seketika setiap kali data berubah.'],
 ];
 
+const SECURITY: { icon: IconName; title: string; text: string }[] = [
+  { icon: 'lock', title: 'Terenkripsi menyeluruh', text: 'Semua koneksi memakai HTTPS, dan datamu juga dienkripsi saat tersimpan di server cloud.' },
+  { icon: 'user', title: 'Hanya kamu yang bisa mengakses', text: 'Setiap permintaan ke database diperiksa. Data hanya bisa dibaca dan diubah oleh pemilik akunnya.' },
+  { icon: 'key', title: 'Kata sandi tidak pernah disimpan', text: 'Kata sandimu diacak (hash) oleh layanan akun Google. Grafika sendiri tidak bisa melihatnya.' },
+  { icon: 'clock', title: 'Perlindungan tebak sandi', text: 'Setelah 5 kali gagal masuk, percobaan dijeda 30 detik, ditambah pembatasan otomatis di server.' },
+  { icon: 'globe', title: 'Terlindung dari serangan web', text: 'Header keamanan mencegah skrip asing berjalan dan melarang situs lain menyematkan Grafika.' },
+  { icon: 'download', title: 'Datamu tetap milikmu', text: 'Ekspor ke CSV atau unduh cadangan kapan saja, dan hapus datasetmu kapan pun kamu mau.' },
+];
+
 const FAQ: [string, React.ReactNode][] = [
   ['Apakah Grafika gratis?', 'Ya. Semua fitur bisa dipakai tanpa biaya dan tanpa kartu kredit.'],
-  ['Di mana dataku disimpan?', 'Di Google Cloud Firestore, terhubung ke akunmu. Hanya kamu yang bisa membaca dan mengubahnya, dan datamu ikut tersinkron saat kamu masuk dari perangkat lain.'],
+  ['Di mana dataku disimpan?', 'Di server cloud yang terhubung ke akunmu, dalam keadaan terenkripsi. Hanya kamu yang bisa membaca dan mengubahnya, dan datamu ikut tersinkron saat kamu masuk dari perangkat lain.'],
   ['Bisakah aku mengimpor data dari Excel atau Google Sheets?', <>Bisa. Simpan lembarmu sebagai CSV dengan kolom <code className="rounded-md bg-surface-2 px-1.5 py-0.5 text-[13px]">tanggal, kategori, nilai, catatan</code>, lalu impor dari dasbor.</>],
   ['Apa bedanya akun demo dan akun sendiri?', 'Akun demo dipakai bersama oleh semua pengunjung, dan datanya kembali ke contoh awal setiap kali ada yang masuk — jadi bebas dicoba. Akun sendiri juga dimulai dengan contoh data, tapi tersimpan permanen dan hanya bisa diakses olehmu.'],
 ];
@@ -150,8 +159,39 @@ export default function LandingPage() {
           <Playground />
         </section>
 
+        {/* ================= KEAMANAN ================= */}
+        <section className="border-y border-line bg-surface py-24 max-sm:py-16 short:py-[72px]" id="keamanan">
+          <div className="wrap grid grid-cols-[0.85fr_1.15fr] items-center gap-14 max-lg:grid-cols-1 max-lg:gap-10">
+            <div className="reveal max-lg:mx-auto max-lg:max-w-[640px] max-lg:text-center">
+              <span className={kicker}>Keamanan</span>
+              <h2 className={h2}>Datamu aman, dan tetap jadi milikmu</h2>
+              <p className="mt-3.5 text-[16.5px] text-fg-2">
+                Angka penjualan atau catatan pribadi bukan untuk dilihat orang lain. Grafika dibangun dengan perlindungan berlapis sejak awal.
+              </p>
+              <div className="mt-7 inline-flex items-center gap-3.5 rounded-2xl border border-line bg-bg py-3.5 pr-5 pl-3.5 text-left">
+                <span className="tone tone-mint size-11 rounded-[13px] text-xl"><Icon name="shield-check" /></span>
+                <div>
+                  <p className="font-bold">Perlindungan berlapis</p>
+                  <p className="text-[13px] text-muted">Enkripsi · aturan akses per akun · header keamanan</p>
+                </div>
+              </div>
+            </div>
+            <ul className="grid grid-cols-2 gap-4 max-sm:grid-cols-1">
+              {SECURITY.map(s => (
+                <li key={s.title} className="reveal flex gap-3.5 rounded-[18px] border border-line bg-bg p-5">
+                  <span className="tone tone-primary size-10 flex-none rounded-xl"><Icon name={s.icon} /></span>
+                  <div>
+                    <h3 className="mb-1 text-[15.5px] font-bold">{s.title}</h3>
+                    <p className="text-[13.5px] leading-relaxed text-fg-2">{s.text}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+
         {/* ================= FAQ ================= */}
-        <section className="border-y border-line bg-surface py-24 max-sm:py-16 short:py-[72px]" id="faq">
+        <section className="py-24 max-sm:py-16 short:py-[72px]" id="faq">
           <div className="wrap max-w-[780px]">
             <div className={sectionHead}>
               <span className={kicker}>FAQ</span>
@@ -159,7 +199,7 @@ export default function LandingPage() {
             </div>
             <div className="reveal grid gap-3">
               {FAQ.map(([q, a], i) => (
-                <details key={q} open={i === 0} className="group rounded-2xl border border-line bg-bg transition-colors open:border-primary">
+                <details key={q} open={i === 0} className="group rounded-2xl border border-line bg-surface transition-colors open:border-primary">
                   <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-[22px] py-[18px] font-bold [&::-webkit-details-marker]:hidden">
                     {q}
                     <span className="text-muted transition-transform duration-300 group-open:rotate-180 group-open:text-primary"><Icon name="chevron-down" /></span>

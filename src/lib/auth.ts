@@ -58,14 +58,16 @@ export function authMessage(err: unknown): string {
     case 'auth/weak-password': return 'Kata sandi terlalu lemah (minimal 6 karakter).';
     case 'auth/too-many-requests': return 'Terlalu banyak percobaan dari perangkat ini. Tunggu sebentar lalu coba lagi.';
     case 'auth/network-request-failed': return 'Tidak bisa terhubung ke server. Periksa koneksi internetmu.';
-    case 'auth/operation-not-allowed': return 'Login email & kata sandi belum diaktifkan di Firebase Console.';
+    case 'auth/operation-not-allowed':
     case 'auth/invalid-api-key':
-    case 'auth/api-key-not-valid.-please-pass-a-valid-api-key.': return 'Konfigurasi Firebase belum benar. Periksa file .env.local.';
-    case 'auth/configuration-not-found': return 'Firebase Authentication belum diaktifkan. Buka Firebase Console → Authentication → Get started.';
+    case 'auth/api-key-not-valid.-please-pass-a-valid-api-key.':
+    case 'auth/configuration-not-found': return 'Layanan masuk sedang tidak tersedia. Coba lagi nanti.';
     case 'auth/user-disabled': return 'Akun ini dinonaktifkan.';
     default:
       if (WRONG_CREDENTIALS.includes(code)) return 'Email atau kata sandi salah.';
-      return err instanceof Error ? err.message : 'Terjadi kesalahan. Coba lagi.';
+      // detail teknis cukup di konsol, jangan ditampilkan ke pengguna
+      console.error(err);
+      return 'Terjadi kesalahan. Coba lagi.';
   }
 }
 

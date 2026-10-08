@@ -12,7 +12,7 @@ export type Tool = 'import' | 'export' | 'backup' | 'restore' | 'print' | 'short
 const TOOLS: [Tool, IconName, string][] = [
   ['import', 'upload', 'Impor CSV'],
   ['export', 'download', 'Ekspor CSV'],
-  ['backup', 'database', 'Cadangkan (JSON)'],
+  ['backup', 'database', 'Cadangkan data'],
   ['restore', 'file', 'Pulihkan cadangan'],
   ['print', 'printer', 'Cetak laporan'],
   ['shortcuts', 'keyboard', 'Pintasan keyboard'],

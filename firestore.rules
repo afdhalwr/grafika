@@ -1,15 +1,52 @@
 rules_version = '2';
 
-// Grafika: setiap pengguna hanya boleh membaca & menulis datanya sendiri.
+// Grafika: setiap pengguna hanya boleh membaca & menulis datanya sendiri,
+// dan isi dokumen dicek supaya tidak bisa diisi kolom asing atau data berukuran berlebihan.
 // Koleksi lain (mis. data Tugasku yang diakses lewat Admin SDK) tidak terpengaruh,
 // karena Admin SDK melewati aturan ini.
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    function isOwner(uid) {
+      return request.auth != null && request.auth.uid == uid;
+    }
+
+    function optString(d, key, max) {
+      return !(key in d) || (d[key] is string && d[key].size() <= max);
+    }
+
+    // grafika_users/{uid}: nama, email, dataset aktif, status sambutan
+    function validProfile(d) {
+      return d.keys().hasOnly(['name', 'email', 'createdAt', 'activeId', 'welcomeDismissed'])
+        && optString(d, 'name', 60)
+        && optString(d, 'email', 254)
+        && optString(d, 'createdAt', 40)
+        && (!('activeId' in d) || d.activeId == null || (d.activeId is string && d.activeId.size() <= 64))
+        && (!('welcomeDismissed' in d) || d.welcomeDismissed is bool);
+    }
+
+    // grafika_users/{uid}/datasets/{id}: satu dataset beserta entrinya
+    function validDataset(d) {
+      return d.keys().hasOnly(['name', 'unit', 'color', 'target', 'higherIsBetter', 'catColors', 'entries', 'order'])
+        && d.name is string && d.name.size() > 0 && d.name.size() <= 60
+        && d.unit is string && d.unit.size() <= 20
+        && d.color is number
+        && d.target is number
+        && d.higherIsBetter is bool
+        && d.catColors is map && d.catColors.size() <= 200
+        && d.entries is list && d.entries.size() <= 10000
+        && d.order is number;
+    }
+
     match /grafika_users/{uid} {
-      allow read, write: if request.auth != null && request.auth.uid == uid;
+      allow read, delete: if isOwner(uid);
+      allow create, update: if isOwner(uid) && validProfile(request.resource.data);
 
       match /datasets/{datasetId} {
-        allow read, write: if request.auth != null && request.auth.uid == uid;
+        allow read, delete: if isOwner(uid);
+        allow create, update: if isOwner(uid)
+          && datasetId.size() <= 64
+          && validDataset(request.resource.data);
       }
     }
   }

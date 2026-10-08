@@ -44,7 +44,7 @@ export default async function OpengraphImage() {
             Grafik interaktif, ringkasan KPI, dan wawasan otomatis dari catatan harianmu.
           </span>
           <div style={{ display: 'flex', gap: 10, marginTop: 34 }}>
-            {['Next.js', 'Firebase', 'Chart.js', 'Tailwind'].map(t => (
+            {['Grafik interaktif', 'Wawasan otomatis', 'Aman & privat'].map(t => (
               <span key={t} style={{ fontSize: 19, fontWeight: 600, color: '#4a5070', background: '#fff', border: '1.5px solid #e3e6f1', borderRadius: 999, padding: '7px 16px' }}>{t}</span>
             ))}
           </div>

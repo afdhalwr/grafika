@@ -29,25 +29,37 @@ const DEFAULT_PREFS: Prefs = { range: '30', gran: 'day', compare: true, from: nu
 const RANGES: [RangeKey, string][] = [['7', '7 hari'], ['30', '30 hari'], ['90', '90 hari'], ['all', 'Semua']];
 const GRANS: [Granularity, string][] = [['day', 'Harian'], ['week', 'Mingguan'], ['month', 'Bulanan']];
 
-/** Cadangan dari Grafika versi lama (localStorage) juga diterima. */
+/* Batas isi cadangan — sama dengan batas di firestore.rules. */
+const MAX_DATASETS = 20;
+const MAX_ENTRIES = 10_000;
+const SAFE_ID = /^[\w-]{1,64}$/;
+
+/** Ambil hanya kolom yang dikenal dari file cadangan; cadangan Grafika versi lama (localStorage) juga diterima. */
 function normalizeBackup(raw: unknown): { datasets: Dataset[]; activeId: string | null } | null {
   const incoming = (raw as { data?: unknown })?.data ?? raw;
   const list = (incoming as { datasets?: unknown })?.datasets;
-  if (!Array.isArray(list) || !list.every(d => d?.id && d?.name && Array.isArray(d?.entries))) return null;
+  if (!Array.isArray(list) || !list.length || list.length > MAX_DATASETS) return null;
+  if (!list.every(d => d?.id && d?.name && Array.isArray(d?.entries) && d.entries.length <= MAX_ENTRIES)) return null;
   const base = Date.now();
-  const datasets: Dataset[] = list.map((d, i) => ({
-    id: String(d.id),
-    name: String(d.name).slice(0, 32),
-    unit: String(d.unit || ''),
-    color: Number(d.color) || 0,
-    target: Number(d.target) || 0,
-    higherIsBetter: d.higherIsBetter !== false,
-    catColors: d.catColors || {},
-    order: Number(d.order) || base + i,
-    entries: d.entries
-      .filter((e: Entry) => e && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && Number.isFinite(Number(e.value)))
-      .map((e: Entry) => ({ id: String(e.id || uid()), date: e.date, category: String(e.category || 'Umum').slice(0, 30), value: Number(e.value), note: String(e.note || '').slice(0, 80) })),
-  }));
+  const datasets: Dataset[] = list.map((d, i) => {
+    const catColors: Record<string, number> = {};
+    if (d.catColors && typeof d.catColors === 'object') {
+      Object.entries(d.catColors).slice(0, 200).forEach(([k, v]) => { catColors[String(k).slice(0, 30)] = Math.abs(Math.trunc(Number(v))) % SERIES_COUNT || 0; });
+    }
+    return {
+      id: SAFE_ID.test(String(d.id)) ? String(d.id) : uid(),
+      name: String(d.name).slice(0, 32),
+      unit: String(d.unit || '').slice(0, 10),
+      color: Math.abs(Math.trunc(Number(d.color))) % SERIES_COUNT || 0,
+      target: Math.max(0, Number(d.target) || 0),
+      higherIsBetter: d.higherIsBetter !== false,
+      catColors,
+      order: Number(d.order) || base + i,
+      entries: d.entries
+        .filter((e: Entry) => e && /^\d{4}-\d{2}-\d{2}$/.test(e.date) && Number.isFinite(Number(e.value)))
+        .map((e: Entry) => ({ id: SAFE_ID.test(String(e.id)) ? String(e.id) : uid(), date: e.date, category: String(e.category || 'Umum').slice(0, 30), value: Number(e.value), note: String(e.note || '').slice(0, 80) })),
+    };
+  });
   const activeId = (incoming as { activeId?: string }).activeId;
   return { datasets, activeId: datasets.some(d => d.id === activeId) ? activeId! : datasets[0]?.id ?? null };
 }
@@ -241,7 +253,7 @@ export function Dashboard({ user }: { user: User }) {
 
   async function restore(file: File) {
     let parsed: unknown;
-    try { parsed = JSON.parse(await readTextFile(file)); } catch { toast('File bukan JSON yang valid.', { type: 'error' }); return; }
+    try { parsed = JSON.parse(await readTextFile(file)); } catch { toast('File ini bukan cadangan Grafika yang valid.', { type: 'error' }); return; }
     const incoming = normalizeBackup(parsed);
     if (!incoming) { toast('Format cadangan tidak dikenali.', { type: 'error' }); return; }
     const ok = await confirm({
@@ -559,7 +571,7 @@ export function Dashboard({ user }: { user: User }) {
             <p className="pt-1 text-center text-[12.5px] text-muted">
               Grafika · proyek portofolio oleh{' '}
               <a href="https://www.linkedin.com/in/afdhal-anwar-431779211" target="_blank" rel="noopener noreferrer" className="font-semibold text-fg-2 no-underline hover:text-primary">Afdhal Anwar</a>
-              {' '}· data tersimpan di Firebase
+              {' '}· datamu terenkripsi & hanya bisa diakses olehmu
             </p>
           </main>
         </div>

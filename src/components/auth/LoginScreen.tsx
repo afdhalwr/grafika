@@ -331,7 +331,7 @@ export function LoginScreen() {
               <label className="check mt-1 items-start!">
                 <input type="checkbox" id="regTerms" checked={terms} onChange={e => { setTerms(e.target.checked); if (e.target.checked) setTermsErr(''); }} />
                 <span className="check-box mt-px"><Icon name="check" /></span>
-                <span>Aku setuju dataku disimpan di akun Grafika (Firebase).</span>
+                <span>Aku setuju dataku disimpan dengan aman di akun Grafika-ku.</span>
               </label>
               <p className="field-error mb-3.5">{termsErr}</p>
 
@@ -343,7 +343,9 @@ export function LoginScreen() {
           )}
         </div>
 
-        <p className="text-center text-[12.5px] text-muted">Proyek portofolio · akun & data disimpan aman di Firebase</p>
+        <p className="flex items-center justify-center gap-1.5 text-center text-[12.5px] text-muted">
+          <Icon name="lock" size={13} /> Koneksi terenkripsi · datamu hanya bisa diakses olehmu
+        </p>
       </main>
 
       <ForgotModal open={forgotOpen} onClose={() => setForgotOpen(false)} initialEmail={fields.loginEmail}

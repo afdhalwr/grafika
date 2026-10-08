@@ -42,7 +42,7 @@ Catat angka harian — penjualan, pengunjung, jam belajar — lalu lihat hasilny
 
 | Rute | Isi |
 |---|---|
-| `/` | Landing page: hero dengan grafik "live", fitur, cara kerja, playground grafik interaktif, FAQ, CTA |
+| `/` | Landing page: hero dengan grafik "live", fitur, cara kerja, playground grafik interaktif, keamanan, FAQ, CTA |
 | `/login` | Masuk & daftar dalam satu halaman bertab, akun demo, lupa kata sandi (email reset) |
 | `/dashboard` | Dasbor statistik lengkap |
 
@@ -71,6 +71,13 @@ Catat angka harian — penjualan, pengunjung, jam belajar — lalu lihat hasilny
 - **Sinkron real-time** antar-tab dan antar-perangkat, tetap bisa dipakai saat offline (cache IndexedDB)
 - Mode gelap, tampilan ponsel (sidebar geser + tombol tambah mengambang)
 - Pintasan keyboard: `N` tambah, `/` cari, `T` tema, `1–9` ganti dataset, `?` bantuan, `Esc` hapus filter
+
+**Keamanan**
+- Aturan Firestore: setiap pengguna hanya bisa membaca & menulis datanya sendiri, dan isi dokumen divalidasi (kolom yang diizinkan, tipe data, batas ukuran) di sisi server
+- Header keamanan di semua halaman: Content-Security-Policy, HSTS, `X-Frame-Options: DENY` (anti-clickjacking), `X-Content-Type-Options`, `Referrer-Policy`, `Permissions-Policy`
+- Kata sandi dikelola Firebase Authentication (di-hash, tidak pernah disimpan aplikasi), ditambah batas percobaan masuk
+- File cadangan & CSV dibatasi ukurannya (5 MB) dan disaring per kolom sebelum disimpan
+- Pesan galat teknis tidak ditampilkan ke pengguna; detailnya hanya di konsol
 
 **Lainnya**
 - Gambar pratinjau tautan (Open Graph) dibuat otomatis saat build dengan `next/og`, jadi tautan tampil sebagai kartu bergambar di WhatsApp, LinkedIn, dan X

@@ -9,10 +9,11 @@ import type { Dataset, Profile } from '@/lib/types';
 
 function dataError(err: unknown) {
   const code = err instanceof FirebaseError ? err.code : '';
-  if (code === 'permission-denied') return 'Firestore menolak akses. Pastikan aturan di firestore.rules sudah dipasang di Firebase Console.';
+  if (code === 'permission-denied') return 'Akses ke data ditolak. Coba keluar lalu masuk lagi.';
   if (code === 'unavailable') return 'Server tidak bisa dihubungi. Perubahan disimpan sementara dan dikirim saat online.';
-  if (code === 'resource-exhausted') return 'Kuota Firebase harian habis. Coba lagi besok.';
-  return err instanceof Error ? err.message : 'Gagal memuat data.';
+  if (code === 'resource-exhausted') return 'Server sedang penuh. Coba lagi beberapa saat lagi.';
+  console.error(err);
+  return 'Gagal memuat data. Coba muat ulang halaman.';
 }
 
 /** Data pengguna dari Firestore + aksi untuk mengubahnya. Perubahan tampil seketika (optimistis). */
