@@ -6,7 +6,7 @@
 
 Catat angka harian — penjualan, pengunjung, jam belajar — lalu lihat hasilnya sebagai grafik interaktif, ringkasan KPI, dan wawasan otomatis.
 
-[**🔗 Buka aplikasi**](https://grafika-iota.vercel.app) · [**⚡ Coba akun demo**](https://grafika-iota.vercel.app/login?demo=1)
+[**🔗 Buka aplikasi**](https://grafika-iota.vercel.app) · [**⚡ Coba akun demo**](https://grafika-iota.vercel.app/login?demo=1) · [**💼 LinkedIn pembuat**](https://www.linkedin.com/in/afdhal-anwar-431779211)
 
 ![Next.js](https://img.shields.io/badge/Next.js_15-000?logo=nextdotjs&logoColor=fff)
 ![React](https://img.shields.io/badge/React_19-149eca?logo=react&logoColor=fff)
@@ -126,3 +126,10 @@ src/
     ├── seed.ts          data contoh 150 hari
     └── format.ts        format angka & tanggal (id-ID)
 ```
+
+## Pembuat
+
+**Afdhal Anwar** — dibuat sebagai proyek portofolio frontend.
+
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Afdhal_Anwar-0a66c2?logo=linkedin&logoColor=fff)](https://www.linkedin.com/in/afdhal-anwar-431779211)
+[![GitHub](https://img.shields.io/badge/GitHub-afdhalwr-181717?logo=github&logoColor=fff)](https://github.com/afdhalwr)

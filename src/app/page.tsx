@@ -28,7 +28,13 @@ const FAQ: [string, React.ReactNode][] = [
   ['Apa bedanya akun demo dan akun sendiri?', 'Akun demo dipakai bersama oleh semua pengunjung, dan datanya kembali ke contoh awal setiap kali ada yang masuk — jadi bebas dicoba. Akun sendiri juga dimulai dengan contoh data, tapi tersimpan permanen dan hanya bisa diakses olehmu.'],
 ];
 
-const kicker = 'mb-3 inline-block text-[13px] font-bold tracking-[0.1em] text-primary uppercase';
+const AUTHOR = {
+  name: 'Afdhal Anwar',
+  linkedin: 'https://www.linkedin.com/in/afdhal-anwar-431779211',
+  github: 'https://github.com/afdhalwr/grafika',
+};
+
+const kicker ='mb-3 inline-block text-[13px] font-bold tracking-[0.1em] text-primary uppercase';
 const sectionHead = 'reveal mx-auto mb-[52px] max-w-[640px] text-center short:mb-10';
 const h2 = 'text-[clamp(28px,3.6vw,40px)] font-extrabold';
 
@@ -185,8 +191,16 @@ export default function LandingPage() {
       <footer className="border-t border-line pt-8 pb-10">
         <div className="wrap flex flex-wrap items-center justify-between gap-4 text-sm text-muted max-sm:justify-center max-sm:text-center">
           <Brand small />
-          <p>Dibuat oleh Dhall sebagai proyek portofolio · {new Date().getFullYear()}</p>
-          <a href="#main" className="no-underline hover:underline">Kembali ke atas ↑</a>
+          <p>
+            Dibuat oleh{' '}
+            <a href={AUTHOR.linkedin} target="_blank" rel="noopener noreferrer" className="font-semibold text-fg-2 no-underline hover:text-primary">{AUTHOR.name}</a>
+            {' '}sebagai proyek portofolio · {new Date().getFullYear()}
+          </p>
+          <div className="flex items-center gap-2">
+            <a className="icon-btn sm" href={AUTHOR.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Afdhal Anwar" title="LinkedIn"><Icon name="linkedin" size={16} /></a>
+            <a className="icon-btn sm" href={AUTHOR.github} target="_blank" rel="noopener noreferrer" aria-label="Kode sumber di GitHub" title="Kode sumber di GitHub"><Icon name="github" size={16} /></a>
+            <a href="#main" className="ml-2 no-underline hover:underline">Kembali ke atas ↑</a>
+          </div>
         </div>
       </footer>
     </>

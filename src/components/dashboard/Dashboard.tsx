@@ -556,7 +556,11 @@ export function Dashboard({ user }: { user: User }) {
               </>
             )}
 
-            <p className="pt-1 text-center text-[12.5px] text-muted">Grafika · proyek portofolio oleh Dhall · data tersimpan di Firebase</p>
+            <p className="pt-1 text-center text-[12.5px] text-muted">
+              Grafika · proyek portofolio oleh{' '}
+              <a href="https://www.linkedin.com/in/afdhal-anwar-431779211" target="_blank" rel="noopener noreferrer" className="font-semibold text-fg-2 no-underline hover:text-primary">Afdhal Anwar</a>
+              {' '}· data tersimpan di Firebase
+            </p>
           </main>
         </div>
       </div>
