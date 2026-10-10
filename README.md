@@ -50,6 +50,7 @@ Catat angka harian — penjualan, pengunjung, jam belajar — lalu lihat hasilny
 
 **Akun (Firebase Authentication)**
 - Daftar & masuk dengan email/kata sandi, "Ingat saya" (sesi lokal vs. sesi tab)
+- Verifikasi wajah saat daftar: kamera + 2 tantangan acak (kedip, toleh kiri/kanan) dengan MediaPipe, diproses sepenuhnya di peramban tanpa menyimpan atau mengirim video
 - Lupa kata sandi mengirim email reset sungguhan
 - Label mengambang, tombol tampilkan sandi, peringatan Caps Lock, pengukur kekuatan sandi
 - Batas 5 percobaan gagal lalu jeda 30 detik (di atas pembatasan bawaan Firebase)
@@ -120,13 +121,14 @@ src/
 ├── app/                 layout (font, tema, provider), /, /login, /dashboard
 ├── components/
 │   ├── landing/         navigasi, grafik hero, playground, animasi muncul
-│   ├── auth/            layar masuk/daftar, panel ilustrasi
+│   ├── auth/            layar masuk/daftar, panel ilustrasi, modal verifikasi wajah
 │   ├── dashboard/       dasbor, grafik, KPI, wawasan, tabel, modal, hook data Firestore
 │   └── …                Icon, Toast, Modal, tema, AuthProvider, ChartCanvas
 └── lib/
     ├── analytics.ts     perhitungan statistik (murni, tanpa React)
     ├── csv.ts           impor/ekspor CSV
     ├── auth.ts          daftar, masuk, akun demo, reset sandi
+    ├── liveness.ts      deteksi wajah & tantangan kedip/toleh (MediaPipe)
     ├── store.ts         baca/tulis Firestore
     ├── firebase.ts      inisialisasi App & Auth
     ├── db.ts            inisialisasi Firestore (dipisah agar landing tetap ringan)

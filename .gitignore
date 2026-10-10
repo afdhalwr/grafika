@@ -1,6 +1,9 @@
 node_modules/
 .next/
 out/
+
+# Disalin dari node_modules oleh scripts/copy-mediapipe.mjs
+public/mediapipe/
 next-env.d.ts
 *.tsbuildinfo
 

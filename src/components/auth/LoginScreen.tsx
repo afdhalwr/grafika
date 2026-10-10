@@ -13,6 +13,7 @@ import { useToast } from '@/components/Toast';
 import { AuthError, DEMO, lockedSeconds, login, loginDemo, logout, register, resetPassword } from '@/lib/auth';
 import { firstName } from '@/lib/format';
 import { AuthArt } from './AuthArt';
+import { FaceVerifyModal } from './FaceVerifyModal';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const wait = (ms: number) => new Promise(r => setTimeout(r, ms));
@@ -56,6 +57,7 @@ export function LoginScreen() {
   const [success, setSuccess] = useState(false);
   const [demoTyping, setDemoTyping] = useState(false);
   const [forgotOpen, setForgotOpen] = useState(false);
+  const [faceOpen, setFaceOpen] = useState(false);
 
   const inputs = useRef<Partial<Record<FieldId, HTMLInputElement | null>>>({});
   const tabRefs = useRef<Record<Tab, HTMLButtonElement | null>>({ login: null, register: null });
@@ -166,6 +168,11 @@ export function LoginScreen() {
       return;
     }
     setAlert(null);
+    setFaceOpen(true); // akun baru dibuat setelah verifikasi wajah lolos
+  }
+
+  async function createAccount() {
+    setFaceOpen(false);
     setBusy('Membuat akun…');
     navigating.current = true;
     try {
@@ -347,6 +354,8 @@ export function LoginScreen() {
           <Icon name="lock" size={13} /> Koneksi terenkripsi · datamu hanya bisa diakses olehmu
         </p>
       </main>
+
+      <FaceVerifyModal open={faceOpen} onClose={() => setFaceOpen(false)} onVerified={createAccount} />
 
       <ForgotModal open={forgotOpen} onClose={() => setForgotOpen(false)} initialEmail={fields.loginEmail}
         onRegister={() => { setForgotOpen(false); showTab('register', true); }} />
